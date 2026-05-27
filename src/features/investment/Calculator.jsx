@@ -6,7 +6,7 @@ export default function Calculator() {
   const [amount, setAmount] = useState("");
   const RATE = 0.11;
   const MONTHS = 18;
-  const isMobile = window.innerWidth < 480;
+  const isMobile = window.innerWidth < 1024;
 
   const principal = parseFloat(amount.replace(/,/g, "")) || 0;
   const monthlyPayout = principal * RATE;
@@ -18,7 +18,7 @@ export default function Calculator() {
   }
 
   return (
-    <div style={styles.card}>
+    <div style={{ ...styles.card, padding: isMobile ? "16px" : "24px", maxWidth: isMobile ? "100%" : "480px" }}>
       <div style={styles.inputRow}>
         <label style={styles.label}>Investment amount (₹)</label>
         <div style={styles.inputWrap}>
@@ -64,8 +64,6 @@ const styles = {
     background: "rgba(255,255,255,0.03)",
     border: "1px solid rgba(255,255,255,0.07)",
     borderRadius: "12px",
-    padding: isMobile ? "16px" : "24px",
-    maxWidth: isMobile ? "100%" : "480px",
     marginTop: "16px",
   },
   inputRow: {

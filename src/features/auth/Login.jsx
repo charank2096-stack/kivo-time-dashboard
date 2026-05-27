@@ -11,10 +11,10 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [showPass, setShowPass] = useState(false);
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 480);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 1024);
 
-  useState(() => {
-    const handleResize = () => setIsMobile(window.innerWidth < 480);
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 1024);
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
@@ -38,7 +38,7 @@ export default function Login() {
 
   return (
     <div style={styles.page}>
-      <div style={styles.card}>
+      <div style={{ ...styles.card, padding: isMobile ? "32px 20px" : "48px 40px" }}>
         <div style={styles.brandArea}>
           <div style={styles.logo}>KT</div>
           <h1 style={styles.brand}>Kivo Time</h1>
@@ -127,7 +127,6 @@ const styles = {
     background: "#FFFFFF",
     border: "1px solid #778DA9",
     borderRadius: "16px",
-    padding: isMobile ? "32px 24px" : "48px 40px",
     width: "100%",
     maxWidth: "420px",
     boxShadow: "0 24px 64px rgba(0,0,0,0.5)",

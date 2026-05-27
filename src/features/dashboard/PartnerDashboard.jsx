@@ -21,10 +21,10 @@ export default function PartnerDashboard() {
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState("orders");
   const [filters, setFilters] = useState({ search: "", dateFrom: "", dateTo: "", status: "All" });
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 1024);
 
   useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    const handleResize = () => setIsMobile(window.innerWidth < 1024);
     window.addEventListener("resize", handleResize);
     api.getMyOrders(user.id).then((data) => {
       setOrders(data);
@@ -145,10 +145,10 @@ export default function PartnerDashboard() {
   }), [orders]);
 
   return (
-    <div style={{ ...styles.page, flexDirection: isMobile ? "column" : "row" }}>
+    <div style={{ ...styles.page, flexDirection: isMobile ? "column" : "row", overflowX: "hidden" }}>
       {/* Sidebar */}
-      <aside style={{ ...styles.sidebar, width: isMobile ? "100%" : "240px", height: isMobile ? "auto" : "100vh", position: isMobile ? "relative" : "sticky" }}>
-        <div style={{ ...styles.sidebarTop, marginBottom: isMobile ? "20px" : "36px" }}>
+      <aside style={{ ...styles.sidebar, width: isMobile ? "100%" : "240px", height: isMobile ? "auto" : "100vh", position: isMobile ? "relative" : "sticky", padding: isMobile ? "16px" : "24px 16px" }}>
+        <div style={{ ...styles.sidebarTop, marginBottom: isMobile ? "16px" : "36px" }}>
           <div style={styles.logo}>KT</div>
           <span style={styles.logoText}>Kivo Time</span>
         </div>
@@ -180,10 +180,10 @@ export default function PartnerDashboard() {
       </aside>
 
       {/* Main content */}
-      <main style={{ ...styles.main, padding: isMobile ? "24px 16px" : "36px 40px" }}>
+      <main style={{ ...styles.main, padding: isMobile ? "24px 16px" : "36px 40px", minWidth: 0 }}>
         {activeTab === "orders" && (
           <>
-            <div style={{ ...styles.header, flexDirection: isMobile ? "column" : "row" }}>
+            <div style={{ ...styles.header, flexDirection: isMobile ? "column" : "row", gap: isMobile ? "16px" : "12px" }}>
               <div>
                 <h1 style={styles.pageTitle}>Your Orders</h1>
                 <p style={styles.pageSubtitle}>{isMobile ? "Orders for " : "All orders assigned to "}{user.franchise_name}</p>
@@ -195,7 +195,7 @@ export default function PartnerDashboard() {
             </div>
 
             {/* Stats row */}
-            <div style={{ ...styles.statsRow, gridTemplateColumns: isMobile ? "1fr 1fr" : "repeat(auto-fit, minmax(140px, 1fr))" }}>
+            <div style={{ ...styles.statsRow, gridTemplateColumns: isMobile ? "repeat(auto-fit, minmax(130px, 1fr))" : "repeat(auto-fit, minmax(140px, 1fr))" }}>
               {[
                 { label: "Total orders", value: stats.total },
                 { label: "Delivered", value: stats.delivered },
@@ -365,7 +365,7 @@ function ProfileTab({ user }) {
     <div>
       <h1 style={styles.pageTitle}>Franchise Profile</h1>
       <p style={styles.pageSubtitle}>Official details for {user.franchise_name}</p>
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "24px", marginTop: "24px" }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "24px", marginTop: "24px" }}>
         {sections.map(s => (
           <div key={s.title} style={styles.statCard}>
             <h3 style={{ ...styles.planName, color: "#0D1B2A", borderBottom: "1px solid #e5e7eb", paddingBottom: "8px", marginBottom: "16px" }}>{s.title}</h3>
