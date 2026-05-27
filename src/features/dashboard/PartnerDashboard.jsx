@@ -21,12 +21,16 @@ export default function PartnerDashboard() {
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState("orders");
   const [filters, setFilters] = useState({ search: "", dateFrom: "", dateTo: "", status: "All" });
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
   useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener("resize", handleResize);
     api.getMyOrders(user.id).then((data) => {
       setOrders(data);
       setLoading(false);
     });
+    return () => window.removeEventListener("resize", handleResize);
   }, [user.id]);
 
   const filtered = useMemo(() => {
@@ -141,10 +145,10 @@ export default function PartnerDashboard() {
   }), [orders]);
 
   return (
-    <div style={styles.page}>
+    <div style={{ ...styles.page, flexDirection: isMobile ? "column" : "row" }}>
       {/* Sidebar */}
-      <aside style={styles.sidebar}>
-        <div style={styles.sidebarTop}>
+      <aside style={{ ...styles.sidebar, width: isMobile ? "100%" : "240px", height: isMobile ? "auto" : "100vh", position: isMobile ? "relative" : "sticky" }}>
+        <div style={{ ...styles.sidebarTop, marginBottom: isMobile ? "20px" : "36px" }}>
           <div style={styles.logo}>KT</div>
           <span style={styles.logoText}>Kivo Time</span>
         </div>
@@ -176,13 +180,13 @@ export default function PartnerDashboard() {
       </aside>
 
       {/* Main content */}
-      <main style={styles.main}>
+      <main style={{ ...styles.main, padding: isMobile ? "24px 16px" : "36px 40px" }}>
         {activeTab === "orders" && (
           <>
-            <div style={styles.header}>
+            <div style={{ ...styles.header, flexDirection: isMobile ? "column" : "row" }}>
               <div>
                 <h1 style={styles.pageTitle}>Your Orders</h1>
-                <p style={styles.pageSubtitle}>All orders assigned to {user.franchise_name}</p>
+                <p style={styles.pageSubtitle}>{isMobile ? "Orders for " : "All orders assigned to "}{user.franchise_name}</p>
               </div>
               <div style={{ display: "flex", gap: "10px" }}>
                 <button style={styles.exportBtn} onClick={exportCSV}>Export CSV</button>
@@ -191,7 +195,7 @@ export default function PartnerDashboard() {
             </div>
 
             {/* Stats row */}
-            <div style={styles.statsRow}>
+            <div style={{ ...styles.statsRow, gridTemplateColumns: isMobile ? "1fr 1fr" : "repeat(auto-fit, minmax(140px, 1fr))" }}>
               {[
                 { label: "Total orders", value: stats.total },
                 { label: "Delivered", value: stats.delivered },

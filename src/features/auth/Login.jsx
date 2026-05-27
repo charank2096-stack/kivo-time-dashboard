@@ -11,6 +11,13 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [showPass, setShowPass] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 480);
+
+  useState(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 480);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -120,7 +127,7 @@ const styles = {
     background: "#FFFFFF",
     border: "1px solid #778DA9",
     borderRadius: "16px",
-    padding: "48px 40px",
+    padding: isMobile ? "32px 24px" : "48px 40px",
     width: "100%",
     maxWidth: "420px",
     boxShadow: "0 24px 64px rgba(0,0,0,0.5)",

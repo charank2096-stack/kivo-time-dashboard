@@ -38,9 +38,15 @@ export default function AdminPanel() {
   const [newPlan, setNewPlan] = useState({ name: "", min_amount: "", max_amount: "", description: "" });
   const [planMsg, setPlanMsg] = useState("");
 
+  // Responsiveness
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
   useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener("resize", handleResize);
     api.getAllOrders().then((d) => { setOrders(d); setOrdersLoading(false); });
     api.getAllPartners().then(setPartners);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   const filteredOrders = useMemo(() => {
@@ -167,10 +173,10 @@ export default function AdminPanel() {
   }
 
   return (
-    <div style={styles.page}>
+    <div style={{ ...styles.page, flexDirection: isMobile ? "column" : "row" }}>
       {/* Sidebar */}
-      <aside style={styles.sidebar}>
-        <div style={styles.sidebarTop}>
+      <aside style={{ ...styles.sidebar, width: isMobile ? "100%" : "240px", height: isMobile ? "auto" : "100vh", position: isMobile ? "relative" : "sticky" }}>
+        <div style={{ ...styles.sidebarTop, marginBottom: isMobile ? "20px" : "36px" }}>
           <div style={styles.logo}>KT</div>
           <span style={styles.logoText}>Admin</span>
         </div>
@@ -195,7 +201,7 @@ export default function AdminPanel() {
       </aside>
 
       {/* Main */}
-      <main style={styles.main}>
+      <main style={{ ...styles.main, padding: isMobile ? "24px 16px" : "36px 40px" }}>
 
         {/* ---- ALL ORDERS ---- */}
         {tab === "All Orders" && (

@@ -6,6 +6,7 @@ export default function Calculator() {
   const [amount, setAmount] = useState("");
   const RATE = 0.11;
   const MONTHS = 18;
+  const isMobile = window.innerWidth < 480;
 
   const principal = parseFloat(amount.replace(/,/g, "")) || 0;
   const monthlyPayout = principal * RATE;
@@ -45,7 +46,7 @@ export default function Calculator() {
           </div>
           <div style={{ ...styles.resultRow, borderTop: "1px solid rgba(201,168,76,0.2)", paddingTop: "12px", marginTop: "4px" }}>
             <span style={styles.resultLabel}>Total received (principal + return)</span>
-            <span style={{ ...styles.resultValue, fontSize: "20px", color: "#0D1B2A" }}>₹{fmt(totalReceived)}</span>
+            <span style={{ ...styles.resultValue, fontSize: isMobile ? "18px" : "20px", color: "#0D1B2A" }}>₹{fmt(totalReceived)}</span>
           </div>
         </div>
       )}
@@ -63,8 +64,8 @@ const styles = {
     background: "rgba(255,255,255,0.03)",
     border: "1px solid rgba(255,255,255,0.07)",
     borderRadius: "12px",
-    padding: "24px",
-    maxWidth: "480px",
+    padding: isMobile ? "16px" : "24px",
+    maxWidth: isMobile ? "100%" : "480px",
     marginTop: "16px",
   },
   inputRow: {
