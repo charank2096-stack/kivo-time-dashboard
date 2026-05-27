@@ -6,6 +6,8 @@ import { useAuth } from "../../context/AuthContext.jsx";
 import { api } from "../../services/api.js";
 import OrderFilters from "./OrderFilters.jsx";
 import OrderRow from "./OrderRow.jsx";
+import Calculator from "../investment/Calculator.jsx";
+import { INVESTMENT_PLANS } from "../../services/mockData.js";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 
@@ -256,9 +258,6 @@ export default function PartnerDashboard() {
 }
 
 // --- Investment Tab (embedded for partner view) ---
-import Calculator from "../investment/Calculator.jsx";
-import { INVESTMENT_PLANS } from "../../services/mockData.js";
-
 function InvestmentTab() {
   return (
     <div>

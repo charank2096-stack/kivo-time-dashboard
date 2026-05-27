@@ -1,6 +1,6 @@
 // Login.jsx — Login screen for Kivo Time
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext.jsx";
 
@@ -113,7 +113,6 @@ export default function Login() {
 const styles = {
   page: {
     minHeight: "100vh",
-    background: "linear-gradient(135deg, #0a0a0f 0%, #12121e 50%, #0a0e1a 100%)",
     background: "#E0E1DD",
     display: "flex",
     alignItems: "center",
@@ -122,14 +121,11 @@ const styles = {
     fontFamily: "'Sora', sans-serif",
   },
   card: {
-    background: "rgba(255,255,255,0.03)",
-    border: "1px solid rgba(201,168,76,0.2)",
     background: "#FFFFFF",
     border: "1px solid #778DA9",
     borderRadius: "16px",
     width: "100%",
     maxWidth: "420px",
-    boxShadow: "0 24px 64px rgba(0,0,0,0.5)",
     boxShadow: "0 24px 64px rgba(13, 27, 42, 0.1)",
   },
   brandArea: {
@@ -139,7 +135,6 @@ const styles = {
   logo: {
     width: "56px",
     height: "56px",
-    background: "linear-gradient(135deg, #c9a84c, #e8c96d)",
     background: "#C5A059",
     borderRadius: "12px",
     display: "flex",
@@ -148,21 +143,18 @@ const styles = {
     margin: "0 auto 16px",
     fontSize: "20px",
     fontWeight: "700",
-    color: "#0a0a0f",
     color: "#0D1B2A",
     letterSpacing: "1px",
   },
   brand: {
     fontSize: "26px",
     fontWeight: "700",
-    color: "#f0e6c8",
     color: "#0D1B2A",
     margin: "0 0 4px",
     letterSpacing: "-0.5px",
   },
   tagline: {
     fontSize: "13px",
-    color: "#6b7280",
     color: "#415A77",
     margin: 0,
     letterSpacing: "0.5px",
@@ -186,13 +178,10 @@ const styles = {
     letterSpacing: "0.8px",
   },
   input: {
-    background: "rgba(255,255,255,0.05)",
-    border: "1px solid rgba(255,255,255,0.1)",
     background: "#FFFFFF",
     border: "1px solid #778DA9",
     borderRadius: "8px",
     padding: "12px 14px",
-    color: "#f0e6c8",
     color: "#0D1B2A",
     fontSize: "14px",
     fontFamily: "'Sora', sans-serif",
@@ -213,20 +202,15 @@ const styles = {
     padding: "4px",
   },
   error: {
-    background: "rgba(239,68,68,0.1)",
-    border: "1px solid rgba(239,68,68,0.3)",
     background: "rgba(188, 71, 73, 0.1)",
     border: "1px solid rgba(188, 71, 73, 0.3)",
     borderRadius: "8px",
     padding: "10px 14px",
-    color: "#f87171",
     color: "#BC4749",
     fontSize: "13px",
     lineHeight: "1.4",
   },
   btn: {
-    background: "linear-gradient(135deg, #c9a84c, #e8c96d)",
-    color: "#0a0a0f",
     background: "#0D1B2A",
     color: "#FFFFFF",
     border: "none",
@@ -242,7 +226,6 @@ const styles = {
   },
   footer: {
     fontSize: "12px",
-    color: "#4b5563",
     color: "#415A77",
     textAlign: "center",
     marginTop: "24px",
@@ -250,8 +233,6 @@ const styles = {
   },
   demoCreds: {
     marginTop: "24px",
-    background: "rgba(255,255,255,0.02)",
-    border: "1px solid rgba(255,255,255,0.06)",
     background: "#F8FAFC",
     border: "1px solid #E2E8F0",
     borderRadius: "8px",
@@ -262,7 +243,6 @@ const styles = {
   },
   demoTitle: {
     fontSize: "11px",
-    color: "#4b5563",
     color: "#415A77",
     margin: "0 0 6px",
     textTransform: "uppercase",
