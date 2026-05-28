@@ -12,7 +12,7 @@ import jsPDF from "jspdf";
 import "jspdf-autotable";
 
 const COLUMNS = [
-  "Order Date", "Description", "Customer Name", "Mobile", "Product", "Value",
+  "Order Date", "Customer Name", "Mobile", "Product Name", "Product Value",
   "Courier #", "Delivery Boy #", "Status",
 ];
 
@@ -52,7 +52,7 @@ export default function PartnerDashboard() {
       [
         o.order_date, `"${o.customer_name}"`, o.customer_mobile,
         `"${o.product_name}"`, o.product_value,
-        o.courier_number, o.delivery_boy_number, o.status,
+        o.courier_number || "—", o.delivery_boy_number || "—", o.status,
       ].join(",")
     );
     const csv = [header, ...rows].join("\n");
@@ -103,7 +103,7 @@ export default function PartnerDashboard() {
 
     pdf.setFontSize(9);
     pdf.autoTable({
-      head: [["Date", "Customer", "Mobile", "Product", "Value", "Courier", "Boy", "Status"]],
+      head: [COLUMNS],
       body: tableData,
       startY: yPos,
       margin: margin,
