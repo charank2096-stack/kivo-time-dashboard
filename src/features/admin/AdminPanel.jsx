@@ -30,7 +30,7 @@ export default function AdminPanel() {
 
   // New partner form state
   const [showAddForm, setShowAddForm] = useState(false);
-  const [newPartner, setNewPartner] = useState({ username: "", password: "", franchise_name: "", phone: "", email: "", aadhaar: "", bank_name: "", account_number: "", ifsc: "" });
+  const [newPartner, setNewPartner] = useState({ username: "", password: "", franchise_name: "", phone: "", email: "", aadhaar: "", bank_name: "", account_number: "", ifsc: "", status: "", awb_number: "" });
   const [addMsg, setAddMsg] = useState("");
 
   // Investment plan form state
@@ -71,13 +71,18 @@ export default function AdminPanel() {
     }
     await api.addPartner(newPartner);
     setAddMsg("Partner added successfully.");
-    setNewPartner({ username: "", password: "", franchise_name: "", phone: "", email: "", aadhaar: "", bank_name: "", account_number: "", ifsc: "" });
+    setNewPartner({ username: "", password: "", franchise_name: "", phone: "", email: "", aadhaar: "", bank_name: "", account_number: "", ifsc: "", status: "", awb_number: "" });
     const updated = await api.getAllPartners();
     setPartners(updated);
   }
 
   async function handleStatusChange(orderId, status) {
     const updated = await api.updateOrderStatus(orderId, status);
+    setOrders((prev) => prev.map((o) => o.id === updated.id ? updated : o));
+  }
+
+  async function handleAwbChange(orderId, awb_number) {
+    const updated = await api.updateOrderAwb(orderId, awb_number);
     setOrders((prev) => prev.map((o) => o.id === updated.id ? updated : o));
   }
 
@@ -114,13 +119,14 @@ export default function AdminPanel() {
         o.product_name,
         `₹${o.product_value.toLocaleString("en-IN")}`,
         partnerName,
+        o.awb_number || "N/A",
         o.status,
       ];
     });
 
     pdf.setFontSize(9);
     pdf.autoTable({
-      head: [["Order ID", "Date", "Customer", "Mobile", "Product", "Value", "Partner", "Status"]],
+      head: [["Order ID", "Date", "Customer", "Mobile", "Product", "Value", "Partner", "AWB", "Status"]],
       body: tableData,
       startY: yPos,
       margin: margin,
@@ -242,7 +248,7 @@ export default function AdminPanel() {
                 <table style={styles.table}>
                   <thead>
                     <tr>
-                      {["Order ID","Date","Customer","Mobile","Product","Value","Partner","Status","Update Status"].map((h) => (
+                      {["Order ID","Date","Customer","Mobile","Product","Value","Partner","AWB","Status","Update Status"].map((h) => (
                         <th key={h} style={styles.th}>{h}</th>
                       ))}
                     </tr>
@@ -257,6 +263,14 @@ export default function AdminPanel() {
                         <td style={styles.td}>{o.product_name}</td>
                         <td style={styles.td}><span style={{ ...styles.mono, color: "#0D1B2A", fontWeight: 600 }}>₹{o.product_value.toLocaleString("en-IN")}</span></td>
                         <td style={styles.td}>{partners.find(p => p.id === o.partnerId)?.franchise_name || "—"}</td>
+                        <td style={styles.td}>
+                          <input
+                            style={{ ...styles.formInput, padding: "8px 10px", width: "100%", fontSize: "12px", minWidth: "140px" }}
+                            defaultValue={o.awb_number || ""}
+                            placeholder="Enter AWB"
+                            onBlur={(e) => handleAwbChange(o.id, e.target.value)}
+                          />
+                        </td>
                         <td style={styles.td}>
                           <span style={{ padding: "3px 10px", borderRadius: "20px", fontSize: "11px", fontWeight: 600, background: STATUS_COLORS[o.status] + "22", color: STATUS_COLORS[o.status] }}>
                             {o.status}
@@ -276,7 +290,7 @@ export default function AdminPanel() {
                       </tr>
                     ))}
                     {filteredOrders.length === 0 && (
-                      <tr><td colSpan={8} style={{ ...styles.th, textAlign: "center", padding: "32px", color: "#4b5563" }}>No orders match your filters.</td></tr>
+                      <tr><td colSpan={9} style={{ ...styles.th, textAlign: "center", padding: "32px", color: "#4b5563" }}>No orders match your filters.</td></tr>
                     )}
                   </tbody>
                 </table>
@@ -311,6 +325,8 @@ export default function AdminPanel() {
                   { key: "bank_name", label: "Bank Name", placeholder: "e.g. State Bank of India" },
                   { key: "account_number", label: "Account Number", placeholder: "Bank account #" },
                   { key: "ifsc", label: "IFSC Code", placeholder: "SBIN0XXXXXX" },
+                  { key: "status", label: "Update Status", placeholder: "e.g. Verified, Onboarding" },
+                  { key: "awb_number", label: "AWB Number", placeholder: "e.g. KIVO-AWB-004" },
                 ].map(({ key, label, placeholder }) => (
                   <div key={key} style={{ marginBottom: "12px" }}>
                     <label style={styles.formLabel}>{label}</label>

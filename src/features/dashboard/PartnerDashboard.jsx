@@ -13,7 +13,7 @@ import "jspdf-autotable";
 
 const COLUMNS = [
   "Order Date", "Customer Name", "Mobile", "Product Name", "Product Value",
-  "Courier #", "Delivery Boy #", "Status",
+  "Courier #", "Delivery Boy #", "AWB Number", "Status", "Update Status",
 ];
 
 export default function PartnerDashboard() {
@@ -46,13 +46,27 @@ export default function PartnerDashboard() {
     });
   }, [orders, filters]);
 
+  function getOrderAwb(order) {
+    return order.awb_number || `KIVO-AWB-${order.id.split("-").pop()}`;
+  }
+
+  async function updateOrderStatus(orderId, status) {
+    const updated = await api.updateOrderStatus(orderId, status);
+    setOrders((prev) => prev.map((o) => (o.id === updated.id ? updated : o)));
+  }
+
+  async function updateOrderAwb(orderId, awb_number) {
+    const updated = await api.updateOrderAwb(orderId, awb_number);
+    setOrders((prev) => prev.map((o) => (o.id === updated.id ? updated : o)));
+  }
+
   function exportCSV() {
     const header = COLUMNS.join(",");
     const rows = filtered.map((o) =>
       [
         o.order_date, `"${o.customer_name}"`, o.customer_mobile,
         `"${o.product_name}"`, o.product_value,
-        o.courier_number || "—", o.delivery_boy_number || "—", o.status,
+        o.courier_number || "—", o.delivery_boy_number || "—", getOrderAwb(o), o.status, ""
       ].join(",")
     );
     const csv = [header, ...rows].join("\n");
@@ -98,7 +112,9 @@ export default function PartnerDashboard() {
       `₹${o.product_value.toLocaleString("en-IN")}`,
       o.courier_number || "—",
       o.delivery_boy_number || "—",
+      getOrderAwb(o),
       o.status,
+      "",
     ]);
 
     pdf.setFontSize(9);
@@ -235,7 +251,13 @@ export default function PartnerDashboard() {
                         </tr>
                       ) : (
                         filtered.map((order, i) => (
-                          <OrderRow key={order.id} order={order} index={i} />
+                          <OrderRow
+                            key={order.id}
+                            order={order}
+                            index={i}
+                            onStatusChange={updateOrderStatus}
+                            onAwbChange={updateOrderAwb}
+                          />
                         ))
                       )}
                     </tbody>

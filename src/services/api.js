@@ -53,6 +53,15 @@ export const api = {
     return user;
   },
 
+  // Admin: update partner details (e.g., status, AWB number)
+  async updatePartner(partnerId, updates) {
+    await delay(300);
+    const user = USERS.find((u) => u.id === partnerId);
+    if (!user) throw new Error("Partner not found.");
+    Object.assign(user, updates);
+    return user;
+  },
+
   // Admin: add new partner
   async addPartner(data) {
     await delay(400);
@@ -60,6 +69,8 @@ export const api = {
       id: `usr_p${Date.now()}`,
       role: "partner",
       is_active: true,
+      status: data.status || "New",
+      awb_number: data.awb_number || "N/A",
       joined: new Date().toISOString().split("T")[0],
       ...data,
     };
@@ -82,6 +93,12 @@ export const api = {
     const order = ORDERS.find((o) => o.id === orderId);
     if (!order) throw new Error("Order not found.");
     order.status = status;
-    return order;
-  },
+    return order;  },
+
+  async updateOrderAwb(orderId, awb_number) {
+    await delay(300);
+    const order = ORDERS.find((o) => o.id === orderId);
+    if (!order) throw new Error("Order not found.");
+    order.awb_number = awb_number || "N/A";
+    return order;  },
 };

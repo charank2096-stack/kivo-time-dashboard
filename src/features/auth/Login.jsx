@@ -98,13 +98,6 @@ export default function Login() {
         <p style={styles.footer}>
           No account yet? Contact your Kivo Time manager to get set up.
         </p>
-
-        <div style={styles.demoCreds}>
-          <p style={styles.demoTitle}>Demo credentials</p>
-          <code style={styles.code}>admin / Admin@2024</code>
-          <code style={styles.code}>rajan.bengaluru / Partner@123</code>
-          <code style={styles.code}>priya.koramangala / Partner@456</code>
-        </div>
       </div>
     </div>
   );
@@ -230,30 +223,5 @@ const styles = {
     textAlign: "center",
     marginTop: "24px",
     marginBottom: "0",
-  },
-  demoCreds: {
-    marginTop: "24px",
-    background: "#F8FAFC",
-    border: "1px solid #E2E8F0",
-    borderRadius: "8px",
-    padding: "14px 16px",
-    display: "flex",
-    flexDirection: "column",
-    gap: "4px",
-  },
-  demoTitle: {
-    fontSize: "11px",
-    color: "#415A77",
-    margin: "0 0 6px",
-    textTransform: "uppercase",
-    letterSpacing: "0.8px",
-  },
-  code: {
-    fontSize: "11px",
-    color: "#415A77",
-    fontFamily: "'JetBrains Mono', monospace",
-    background: "none",
-    padding: "1px 0",
-    display: "block",
   },
 };

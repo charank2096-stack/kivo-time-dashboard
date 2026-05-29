@@ -22,12 +22,3 @@ export function verifyPassword(password, hash) {
   // In production, use server-side bcryptjs compare
   return hashPassword(password) === hash;
 }
-
-// For the mock data, we'll store passwords in a simpler but still secure manner
-// by using a salt-like approach
-export const DEMO_PASSWORDS = {
-  'admin': 'Admin@2024',
-  'rajan.bengaluru': 'Partner@123',
-  'priya.koramangala': 'Partner@456',
-  'suresh.malleshwaram': 'Partner@789',
-};

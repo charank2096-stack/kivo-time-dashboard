@@ -52,6 +52,8 @@ export const USERS = [
     account_number: "XXXXXXXX1234",
     ifsc: "SBIN0000123",
     payment_method: "Bank Transfer",
+    status: "Verified",
+    awb_number: "KIVO-AWB-001",
     joined: "2023-09-01",
   },
   {
@@ -75,6 +77,8 @@ export const USERS = [
     account_number: "XXXXXXXX5678",
     ifsc: "ICIC0000456",
     payment_method: "Bank Transfer",
+    status: "Onboarding",
+    awb_number: "KIVO-AWB-002",
     joined: "2023-11-15",
   },
   {
@@ -98,6 +102,8 @@ export const USERS = [
     account_number: "XXXXXXXX9012",
     ifsc: "UTIB0000789",
     payment_method: "Bank Transfer",
+    status: "Pending",
+    awb_number: "KIVO-AWB-003",
     joined: "2024-01-10",
   },
 ];
@@ -115,6 +121,7 @@ export const ORDERS = [
     product_value: 4850,
     courier_number: "BD987612345IN",
     delivery_boy_number: "8762345671",
+    awb_number: "KIVO-AWB-0891",
     status: "Delivered",
   },
   {
@@ -128,6 +135,7 @@ export const ORDERS = [
     product_value: 7200,
     courier_number: "BD987612346IN",
     delivery_boy_number: "8762345671",
+    awb_number: "KIVO-AWB-0892",
     status: "Dispatched",
   },
   {
@@ -141,6 +149,7 @@ export const ORDERS = [
     product_value: 15999,
     courier_number: "BD987612347IN",
     delivery_boy_number: "9632145678",
+    awb_number: "KIVO-AWB-0893",
     status: "Out for Delivery",
   },
   {
@@ -154,6 +163,7 @@ export const ORDERS = [
     product_value: 1999,
     courier_number: "",
     delivery_boy_number: "",
+    awb_number: "KIVO-AWB-0894",
     status: "Pending",
   },
   {
@@ -167,6 +177,7 @@ export const ORDERS = [
     product_value: 22500,
     courier_number: "BD987612348IN",
     delivery_boy_number: "8762345671",
+    awb_number: "KIVO-AWB-0895",
     status: "Returned",
   },
   {
@@ -180,6 +191,7 @@ export const ORDERS = [
     product_value: 3450,
     courier_number: "BD987612349IN",
     delivery_boy_number: "9632145678",
+    awb_number: "KIVO-AWB-0896",
     status: "Dispatched",
   },
   {
@@ -193,6 +205,7 @@ export const ORDERS = [
     product_value: 2799,
     courier_number: "",
     delivery_boy_number: "",
+    awb_number: "KIVO-AWB-0897",
     status: "Pending",
   },
   {
@@ -206,6 +219,7 @@ export const ORDERS = [
     product_value: 8750,
     courier_number: "BD987612350IN",
     delivery_boy_number: "8762345671",
+    awb_number: "KIVO-AWB-0898",
     status: "Delivered",
   },
 
@@ -221,6 +235,7 @@ export const ORDERS = [
     product_value: 2499,
     courier_number: "BD987712301IN",
     delivery_boy_number: "7760123456",
+    awb_number: "KIVO-AWB-1101",
     status: "Delivered",
   },
   {
@@ -234,6 +249,7 @@ export const ORDERS = [
     product_value: 11200,
     courier_number: "BD987712302IN",
     delivery_boy_number: "7760123456",
+    awb_number: "KIVO-AWB-1102",
     status: "Out for Delivery",
   },
   {
@@ -247,6 +263,7 @@ export const ORDERS = [
     product_value: 3650,
     courier_number: "",
     delivery_boy_number: "",
+    awb_number: "KIVO-AWB-1103",
     status: "Pending",
   },
   {
@@ -260,6 +277,7 @@ export const ORDERS = [
     product_value: 18500,
     courier_number: "BD987712303IN",
     delivery_boy_number: "9900112233",
+    awb_number: "KIVO-AWB-1104",
     status: "Delivered",
   },
   {
@@ -273,6 +291,7 @@ export const ORDERS = [
     product_value: 54000,
     courier_number: "BD987712304IN",
     delivery_boy_number: "9900112233",
+    awb_number: "KIVO-AWB-1105",
     status: "Dispatched",
   },
 
@@ -288,6 +307,7 @@ export const ORDERS = [
     product_value: 12800,
     courier_number: "BD987812401IN",
     delivery_boy_number: "8800987654",
+    awb_number: "KIVO-AWB-1301",
     status: "Delivered",
   },
 ];
